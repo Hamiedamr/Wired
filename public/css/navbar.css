@@ -1,0 +1,12 @@
+.navbar {background: rgb(44, 238, 238);
+  background: linear-gradient(
+    90deg,
+    rgba(44, 238, 238, 1) 0%,
+    rgba(48, 139, 147, 1) 50%,
+    rgba(62, 138, 166, 1) 100%
+  );
+  color: aliceblue; }
+
+  a {
+      color : white ; 
+  }

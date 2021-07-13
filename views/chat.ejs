@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <!-- Bootstrap CSS -->
+    <!-- CSS only -->
+
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/bootstrap-social/bootstrap-social.css" />
+    <link href="css/main1.css" rel="stylesheet" />
+    <link href="/css/navbar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/chat.css" />
+
+    <title>Meeting</title>
+  </head>
+  <body>
+    <%- include('navbar.ejs') %>
+    <script>
+      var userFirstName = "<%= user.firstName %>";
+      var userLastName = "<%= user.lastName %>";
+      var camera = <%= camera %>;
+      var mic = <%= mic %>;
+      var user = userFirstName + userLastName;
+      var roomId = "<%= roomId %>";
+      console.log(user);
+    </script>
+    <div class="container-fluid">
+      <div class="row row-content">
+        <div class="col-sm-8">
+          <div class="first-col">
+            <div id="video-container">
+              <video
+                src=""
+                id="me"
+                style="width: 30%"
+                class="v1"
+                autoplay
+              ></video>
+              <video src="" id="them" style="width: 70%" autoplay></video>
+            </div>
+            <button id="cameraButton" class="btn btn-info btn-lg">
+              <i class="fa fa-video-camera" aria-hidden="true"></i> Camera
+            </button>
+            <button id="micButton" class="btn btn-info btn-lg">
+              <i class="fa fa-microphone" aria-hidden="true"></i> Mic
+            </button>
+            <button class="btn btn-info btn-lg">emotion (1)</button>
+            <button class="btn btn-info btn-lg">gender (2)</button>
+            <button class="btn btn-info btn-lg">age (3)</button>
+            <a href="/home" id="endCallButton" class="btn btn-danger btn-lg"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="23"
+                height="23"
+                fill="currentColor"
+                class="bi bi-telephone"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
+                />
+              </svg>
+              End call</a
+            >
+            <br />
+            <button class="btn btn-info btn-lg mt-2 me-2" id="start_button">
+              Record sign language
+            </button>
+            <button class="btn btn-info btn-lg mt-2 " id="s_to_t_button">
+              Speech to text
+            </button>
+            <h3 id="timer_container">Not Recording</h3>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="container bootstrap snippets bootdeys second-col">
+            <div class="col-xs-12 col-md-offset-2">
+              <!-- Panel Chat -->
+              <div class="panel" id="chat">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    Messages
+                    <i class="icon wb-chat-text" aria-hidden="true"></i>
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <div class="chats">
+                    <!-- <div class="chat">
+                       <div class="chat-avatar">
+                        <a
+                          class="avatar avatar-online"
+                          data-toggle="tooltip"
+                          href="#"
+                          data-placement="right"
+                          title=""
+                          data-original-title="June Lane"
+                        >
+                          <img
+                            src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                            alt="..."
+                          />
+                          <i></i>
+                        </a>
+                      </div> 
+                      <div class="chat-body">
+                        <div class="chat-content">
+                          <p>
+                            Good morning, sir.
+                            <br />What can I do for you?
+                          </p>
+                          <time class="chat-time" datetime="2015-07-01T11:37"
+                            >11:37:08 am</time
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chat chat-left">
+                      <div class="chat-avatar">
+                        <a
+                          class="avatar avatar-online"
+                          data-toggle="tooltip"
+                          href="#"
+                          data-placement="left"
+                          title=""
+                          data-original-title="Edward Fletcher"
+                        >
+                          <img
+                            src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                            alt="..."
+                          />
+                          <i></i>
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-content">
+                          <p>Well, I am just looking around.</p>
+                          <time class="chat-time" datetime="2015-07-01T11:39"
+                            >11:39:57 am</time
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chat">
+                      <div class="chat-avatar">
+                        <a
+                          class="avatar avatar-online"
+                          data-toggle="tooltip"
+                          href="#"
+                          data-placement="right"
+                          title=""
+                          data-original-title="June Lane"
+                        >
+                          <img
+                            src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                            alt="..."
+                          />
+                          <i></i>
+                        </a>
+                      </div>
+                      <div class="chat-body">
+                        <div class="chat-content">
+                          <p>If necessary, please ask me.</p>
+                          <time class="chat-time" datetime="2015-07-01T11:40"
+                            >11:40:10 am</time
+                          >
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="panel-footer">
+                  <form>
+                    <div class="input-group">
+                      <textarea
+                        class="form-control txt-area"
+                        placeholder="Say something"
+                      ></textarea>
+                      <span class="input-group-btn">
+                        <button class="btn btn-info send-button" type="button">
+                          Send
+                        </button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- End Panel Chat -->
+            </div>
+            <button class="btn btn-danger btn-lg mt-2" id="readChatButton">
+              Mute chat
+            </button>
+          </div>
+        </div>
+      </div>
+      <script src="https://code.responsivevoice.org/responsivevoice.js?key=EDcfQc2X"></script>
+      <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
+      <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+      <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+      <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+      <script src="/jquery/dist/jquery.slim.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <!-- <script src="/popper.js/dist/umd/popper.min.js"></script> -->
+      <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+
+      <!-- <script src="/node_modules/peerjs/dist/peerjs.js"></script> -->
+      <script src="/js/chat.js"></script>
+      <script>
+        var f = "";
+        document.addEventListener("keydown", (e) => {
+          if (!e.repeat) {
+            if (e.which == 49) {
+              f = "emotion";
+              take_snapshot(f);
+            }
+            if (e.which == 50) {
+              f = "gender";
+              take_snapshot(f);
+            }
+            if (e.which == 51) {
+              f = "age";
+              take_snapshot(f);
+            }
+            if (e.which == 52) {
+              startRecording();
+            }
+          } else logMessage(`Key "${e.key}" repeating  [event: keydown]`);
+        });
+        socket.on("age", (data) => {
+          console.log(data)
+          responsiveVoice.speak(data, "Arabic Female");
+        });
+        socket.on("emotion", (data) => {
+          data = data.trim()
+          let emotion = {
+            "Happy": "سعيد",
+            "Sad": "حزين",
+            "Angry": "غاضب",
+            "Surprise": "متفاجئ",
+            "Disgust": "مشمئز",
+            "Neutral": "طبيعي"
+          };
+          console.log(data)
+          responsiveVoice.speak(emotion[data], "Arabic Female");
+        });
+        socket.on("gender", (data) => {
+          data = data.trim()
+          let gender = {
+            'Male': "ذَكَر",
+            'Female': "أُنثَى",
+          };
+          console.log(data)
+
+          responsiveVoice.speak(gender[data], "Arabic Female");
+        });
+
+        var video = document.getElementById("them");
+        function sleep(ms) {
+          return new Promise((resolve) => setTimeout(resolve, ms));
+        }
+        function take_snapshot(f) {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          canvas.getContext("2d").drawImage(video, 0, 0);
+          const data_uri = canvas.toDataURL("image/png");
+          canvas.toBlob((blob) => {
+            socket.emit("img", { data: data_uri, type: f, roomId: roomId });
+          }, "image/jpg");
+        }
+      </script>
+    </div>
+  </body>
+</html>
