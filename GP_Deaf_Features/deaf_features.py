@@ -1,4 +1,3 @@
-from googletrans import Translator
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 import onnx
@@ -22,7 +21,7 @@ from tensorflow.python.ops.distributions.uniform import Uniform
 import random
 import math
 
-
+np.random.seed(1234)
 class I3D_WLASL():
     '''
         Class of I3D Model trained of WLASL, saved & loaded using ONNX opensource packaging
@@ -478,9 +477,6 @@ class I3D_WLASL():
 os.system("rm videos/test.mp4")
 os.system('ffmpeg -i {} -codec copy {}'.format("videos/test.MKV","videos/test.mp4"))
 model = I3D_WLASL()
-translator = Translator()
 out = model.detect("videos/test.mp4")[0]
 print(out)
-t = translator.translate(out,src="ar",dest="ar")
-print(t.text)
 

@@ -1,14 +1,10 @@
 const express = require("express"),
+
   { spawn } = require("child_process"),
   fs = require("fs"),
   FileReader = require("filereader"),
   http = require("http"),
   app = express(),
-  sdk = require("microsoft-cognitiveservices-speech-sdk"),
-  speechConfig = sdk.SpeechConfig.fromSubscription(
-    "8c6ed815e5ec4296aa8b060a89874863",
-    "centralus"
-  ),
   socketio = require("socket.io"),
   server = http.createServer(app),
   io = socketio(server),
@@ -22,7 +18,6 @@ const express = require("express"),
   crypto = require("crypto"),
   async = require("async"),
   localStrategy = require("passport-local");
-  speechConfig.speechRecognitionLanguage = 'ar-EG';
 mongoose.connect(
   process.env.MONGODB_URI ||
     "mongodb+srv://aukshmark:aukshmark15@cluster0.nliro.mongodb.net/PHASE1?retryWrites=true&w=majority",
@@ -63,7 +58,7 @@ function isLogged(req, res, next) {
 io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
     socket.join(data.roomId);
-    data.lang = "en";
+    // data.lang = "en";
     socket.broadcast.to(data.roomId).emit("chatMessage", data);
   });
   socket.on("chatMessage", (text) => {
@@ -112,10 +107,11 @@ io.on("connection", (socket) => {
         python.stdout.on("data", (data) => {
           dataFromPython = data.toString();
           let now = new Date();
-          socket.broadcast.to(roomId).emit("chatMessage", {
+          io.in(roomId).emit("chatMessage", {
             data: dataFromPython,
             date: now.toLocaleString(),
             lang: "en",
+            id:socket.id
           });
         });
       });

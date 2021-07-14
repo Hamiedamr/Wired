@@ -34,11 +34,11 @@ let readChatFunction = () => {
   if (readChat) {
     readChatButton.classList.add("btn-info");
     readChatButton.classList.remove("btn-danger");
-    readChatButton.innerText = "read Chat";
+    readChatButton.innerText = "Read Chat";
   } else {
     readChatButton.classList.remove("btn-info");
     readChatButton.classList.add("btn-danger");
-    readChatButton.innerText = "mute Chat";
+    readChatButton.innerText = "Mute Chat";
   }
   readChat = !readChat;
 };
@@ -53,14 +53,54 @@ readChatButton.addEventListener("click", readChatFunction);
 
 socket.on("chatMessage", (message) => {
   if (message.lang == "en" && readChat) {
-    responsiveVoice.speak(message.data, "UK English Male");
-  } else if (readChat) responsiveVoice.speak(message.data, "Arabic Male");
+    
+    var data = JSON.stringify([
+      {
+        "text": message.data
+      }
+    ]);
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function() {
+      if(this.readyState === 4) {
+        let translatedText = JSON.parse(this.responseText)
+        console.log(translatedText[0].translations[0].text);
+        let direction = "left";
+         if(message.id == socket.id){
+            direction = "right"
+          } else{
+            responsiveVoice.speak(translatedText[0].translations[0].text, "Arabic Male");
+          }
+        outputMessage(
+          translatedText[0].translations[0].text,
+          direction,
+          "https://bootdey.com/img/Content/avatar/avatar1.png",
+          message.date
+        );
+      }
+    });
+    xhr.open("POST", "https://api.cognitive.microsofttranslator.com/translate/?api-version=3.0&from=en&to=ar");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "8798cea1bba646d5914207b388ed8923");
+    xhr.setRequestHeader("Ocp-Apim-Subscription-Region", "centralus");
+    
+    xhr.send(data);
+  
+
+  } else if (readChat) {
+    let direction = "left";
+    if(message.id == socket.id){
+       direction = "right"
+     } else{
+      responsiveVoice.speak(message.data, "Arabic Male")
+    }
   outputMessage(
     message.data,
-    "left",
+    direction,
     "https://bootdey.com/img/Content/avatar/avatar1.png",
     message.date
   );
+  }
 });
 let now = new Date();
 socket.emit("joinRoom", {
@@ -308,8 +348,8 @@ navigator.mediaDevices
     start_button.addEventListener("click", () => {
       start_button.disabled = true;
       recorder.startRecording();
-      start_timer(10);
-      setTimeout(stop_record, 10000);
+      start_timer(5);
+      setTimeout(stop_record, 5000);
     });
     ///////////////
     myVideo.play();

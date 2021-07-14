@@ -39,7 +39,7 @@
               <video
                 src=""
                 id="me"
-                style="width: 30%"
+                style="width: 20%"
                 class="v1"
                 autoplay
               ></video>
@@ -194,11 +194,12 @@
               <!-- End Panel Chat -->
             </div>
             <button class="btn btn-danger btn-lg mt-2" id="readChatButton">
-              Mute chat
+              Mute Chat
             </button>
           </div>
         </div>
       </div>
+      <script src="https://cdn.webrtc-experiment.com/Translator.js"> </script>
       <script src="https://code.responsivevoice.org/responsivevoice.js?key=EDcfQc2X"></script>
       <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
       <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
@@ -253,7 +254,7 @@
         socket.on("gender", (data) => {
           data = data.trim()
           let gender = {
-            'Male': "ذَكَر",
+            'Male':"رجل",
             'Female': "أُنثَى",
           };
           console.log(data)
