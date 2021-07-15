@@ -1,5 +1,4 @@
 const express = require("express"),
-
   { spawn } = require("child_process"),
   fs = require("fs"),
   FileReader = require("filereader"),
@@ -26,6 +25,8 @@ mongoose.connect(
     useUnifiedTopology: true,
   }
 );
+/////////////////////////////////
+/////////////////////////////////
 let port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(
@@ -54,7 +55,6 @@ function isLogged(req, res, next) {
   if (req.isAuthenticated()) return next();
   res.redirect("/login");
 }
-
 io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
     socket.join(data.roomId);
@@ -111,7 +111,7 @@ io.on("connection", (socket) => {
             data: dataFromPython,
             date: now.toLocaleString(),
             lang: "en",
-            id:socket.id
+            id: socket.id,
           });
         });
       });
@@ -139,22 +139,29 @@ app.get("/home", isLogged, (req, res) => {
 });
 
 app.post("/home/chat", isLogged, (req, res) => {
+  console.log(req.body);
   res.redirect(
     url.format({
       pathname: `/home/chat/${uuidv4()}`,
       query: {
         options: req.body.options,
+        problems: req.body.problems,
       },
     })
   );
 });
 
 app.post("/home/join", isLogged, (req, res) => {
+  let link = req.body.chaturl;
+  let start = link.search("/chat/") + 6;
+  let end = link.search("options") - 1;
+  link = link.slice(start, end);
   res.redirect(
     url.format({
-      pathname: `/home/chat/${req.body.chaturl}`,
+      pathname: `/home/chat/${link}`,
       query: {
         options: req.body.options,
+        problems: req.body.problems,
       },
     })
   );
@@ -318,7 +325,8 @@ app.post("/reset/:token", (req, res) => {
 
 app.get("/home/chat/:id", isLogged, (req, res) => {
   let camera = false,
-    mic = false;
+    mic = false,
+    problems = req.query.problems;
   if (req.query.options.includes("camera") || req.query.options == "camera") {
     camera = true;
   }
@@ -333,6 +341,7 @@ app.get("/home/chat/:id", isLogged, (req, res) => {
     roomId: req.params.id,
     mic: mic,
     camera: camera,
+    problems: problems,
   });
 });
 
