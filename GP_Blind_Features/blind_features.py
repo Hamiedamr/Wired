@@ -306,7 +306,7 @@ class AgeDetector():
         return img, face_images,output
 img  = cv2.imread('images/test.jpg')
 if  sys.argv[1] == "emotion":
-    Emodel = EmotionRecognition(r"GP_Blind_Features/pretrained_models\xception_model_99.hdf5")
+    Emodel = EmotionRecognition(r"GP_Blind_Features/pretrained_models/xception_model_99.hdf5")
     print(Emodel.detect(img)[2][0])
 elif  sys.argv[1] == "gender":
     Gmodel = GenderRecognition()
