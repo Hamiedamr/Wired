@@ -79,7 +79,7 @@ socket.on("chatMessage", (message) => {
         );
       }
     });
-    xhr.open("POST", "https://api.cognitive.microsofttranslator.com/translate/?api-version=3.0&from=en&to=ar");
+    xhr.open("POST", "https://api.cognitive.microsofttranslator.com/translate/?api-version=3.0&from=en&to=ar",true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "8798cea1bba646d5914207b388ed8923");
     xhr.setRequestHeader("Ocp-Apim-Subscription-Region", "centralus");
@@ -294,7 +294,7 @@ navigator.mediaDevices
       xhr.open(
         "POST",
         "https://centralus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=ar-EG"
-      );
+      ,true);
       xhr.setRequestHeader("Content-type", "audio/wav");
       xhr.setRequestHeader(
         "Ocp-Apim-Subscription-Key",
