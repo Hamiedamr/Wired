@@ -60,7 +60,7 @@ socket.on("chatMessage", (message) => {
       }
     ]);
     var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
+    xhr.withCredentials = false;
     xhr.addEventListener("readystatechange", function() {
       if(this.readyState === 4) {
         let translatedText = JSON.parse(this.responseText)
@@ -83,7 +83,7 @@ socket.on("chatMessage", (message) => {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "8798cea1bba646d5914207b388ed8923");
     xhr.setRequestHeader("Ocp-Apim-Subscription-Region", "centralus");
-    
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhr.send(data);
   
 
@@ -268,7 +268,7 @@ navigator.mediaDevices
       // //   console.log(result);
       // // };
       var xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
+      xhr.withCredentials = false;
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
           result = this.responseText;
@@ -296,6 +296,7 @@ navigator.mediaDevices
         "https://centralus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=ar-EG"
       ,true);
       xhr.setRequestHeader("Content-type", "audio/wav");
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
       xhr.setRequestHeader(
         "Ocp-Apim-Subscription-Key",
         "8c6ed815e5ec4296aa8b060a89874863"
