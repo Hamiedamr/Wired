@@ -30,6 +30,7 @@ myPeer.on("open", function (id) {
     roomId: roomId,
   });
 });
+
 let readChatFunction = () => {
   if (readChat) {
     readChatButton.classList.add("btn-info");
@@ -43,6 +44,7 @@ let readChatFunction = () => {
   readChat = !readChat;
 };
 readChatButton.addEventListener("click", readChatFunction);
+if (hidden_blind) readChatFunction();
 //send data test
 // myPeer.on("connection", (conn) => {
 //   conn.on("data", (data) => {
@@ -53,24 +55,26 @@ readChatButton.addEventListener("click", readChatFunction);
 
 socket.on("chatMessage", (message) => {
   if (message.lang == "en" && readChat) {
-    
     var data = JSON.stringify([
       {
-        "text": message.data
-      }
+        text: message.data,
+      },
     ]);
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = false;
-    xhr.addEventListener("readystatechange", function() {
-      if(this.readyState === 4) {
-        let translatedText = JSON.parse(this.responseText)
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        let translatedText = JSON.parse(this.responseText);
         console.log(translatedText[0].translations[0].text);
         let direction = "left";
-         if(message.id == socket.id){
-            direction = "right"
-          } else{
-            responsiveVoice.speak(translatedText[0].translations[0].text, "Arabic Male");
-          }
+        if (message.id == socket.id) {
+          direction = "right";
+        } else {
+          responsiveVoice.speak(
+            translatedText[0].translations[0].text,
+            "Arabic Male"
+          );
+        }
         outputMessage(
           translatedText[0].translations[0].text,
           direction,
@@ -79,27 +83,36 @@ socket.on("chatMessage", (message) => {
         );
       }
     });
-    xhr.open("POST", "https://api.cognitive.microsofttranslator.com/translate/?api-version=3.0&from=en&to=ar",true);
+    xhr.open(
+      "POST",
+      "https://api.cognitive.microsofttranslator.com/translate/?api-version=3.0&from=en&to=ar"
+    );
+    // xhr.setRequestHeader(
+    //   "Access-Control-Allow-Origin",
+    //   "http://127.0.0.1:3000"
+    // );
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "8798cea1bba646d5914207b388ed8923");
+    xhr.setRequestHeader(
+      "Ocp-Apim-Subscription-Key",
+      "8798cea1bba646d5914207b388ed8923"
+    );
     xhr.setRequestHeader("Ocp-Apim-Subscription-Region", "centralus");
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.send(data);
-  
+    xhr.setRequestHeader("crossDomain", "true");
 
+    xhr.send(data);
   } else if (readChat) {
     let direction = "left";
-    if(message.id == socket.id){
-       direction = "right"
-     } else{
-      responsiveVoice.speak(message.data, "Arabic Male")
+    if (message.id == socket.id) {
+      direction = "right";
+    } else {
+      responsiveVoice.speak(message.data, "Arabic Male");
     }
-  outputMessage(
-    message.data,
-    direction,
-    "https://bootdey.com/img/Content/avatar/avatar1.png",
-    message.date
-  );
+    outputMessage(
+      message.data,
+      direction,
+      "https://bootdey.com/img/Content/avatar/avatar1.png",
+      message.date
+    );
   }
 });
 let now = new Date();
@@ -110,8 +123,7 @@ socket.emit("joinRoom", {
   name: user,
   roomId: roomId,
 });
-
-sendButton.addEventListener("click", () => {
+let sendFunction = () => {
   let date = new Date();
   socket.emit("chatMessage", {
     data: input.value,
@@ -125,6 +137,14 @@ sendButton.addEventListener("click", () => {
     "https://bootdey.com/img/Content/avatar/avatar2.png",
     date.toLocaleString()
   );
+  input.value = "";
+};
+sendButton.addEventListener("click", sendFunction);
+
+input.addEventListener("keypress", function (ev) {
+  if (ev.keyCode === 13 || ev.which === 13) {
+    sendFunction();
+  }
 });
 
 const outputMessage = (message, placement, imageSrc, time) => {
@@ -172,10 +192,12 @@ navigator.mediaDevices
     audioStream.removeTrack(audioStream.getTracks()[1]);
     ///initial conditions
     if (mic == false) {
+      micButton.classList.replace("btn-info", "btn-danger");
       myStream.getTracks()[0].enabled = false;
       stream.getTracks()[0].enabled = false;
     }
     if (camera == false) {
+      cameraButton.classList.replace("btn-info", "btn-danger");
       myStream.getTracks()[1].enabled = false;
       stream.getTracks()[1].enabled = false;
     }
@@ -294,9 +316,8 @@ navigator.mediaDevices
       xhr.open(
         "POST",
         "https://centralus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=ar-EG"
-      ,true);
+      );
       xhr.setRequestHeader("Content-type", "audio/wav");
-      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
       xhr.setRequestHeader(
         "Ocp-Apim-Subscription-Key",
         "8c6ed815e5ec4296aa8b060a89874863"
@@ -357,9 +378,11 @@ navigator.mediaDevices
     cameraButton.addEventListener("click", () => {
       if (sendVideo == true) {
         videoTrack.enabled = false;
+        cameraButton.classList.replace("btn-info", "btn-danger");
         myStream.getTracks()[0].enabled = false;
       } else {
         videoTrack.enabled = true;
+        cameraButton.classList.replace("btn-danger", "btn-info");
         myStream.getTracks()[0].enabled = true;
       }
       sendVideo = !sendVideo;
@@ -367,7 +390,11 @@ navigator.mediaDevices
     micButton.addEventListener("click", () => {
       if (sendAudio == true) {
         audioTrack.enabled = false;
-      } else audioTrack.enabled = true;
+        micButton.classList.replace("btn-info", "btn-danger");
+      } else {
+        audioTrack.enabled = true;
+        micButton.classList.replace("btn-danger", "btn-info");
+      }
       sendAudio = !sendAudio;
     });
     myPeer.on("call", (call) => {
@@ -388,6 +415,11 @@ navigator.mediaDevices
       });
       socket.once("callClosed", () => {
         videoTrack2.enabled = false;
+      });
+      window.addEventListener("beforeunload", (e) => {
+        e.preventDefault();
+        call.close();
+        socket.emit("callClosed", { roomId: roomId });
       });
     });
 
@@ -420,6 +452,11 @@ navigator.mediaDevices
         // document.location.href = "../";
       });
       endCallButton.addEventListener("click", () => {
+        call.close();
+        socket.emit("callClosed", { roomId: roomId });
+      });
+      window.addEventListener("beforeunload", (e) => {
+        e.preventDefault();
         call.close();
         socket.emit("callClosed", { roomId: roomId });
       });
