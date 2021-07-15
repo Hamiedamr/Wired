@@ -27,6 +27,17 @@
       var userLastName = "<%= user.lastName %>";
       var camera = <%= camera %>;
       var mic = <%= mic %>;
+      var problems = <%= problems %>;
+      var hidden_blind = false;
+      var hidden_deaf = false;
+      var hidden_speech_to_text = false;
+      if(problems == 1){
+        hidden_blind = true;
+        hidden_deaf = true;
+      }
+      else if(problems == 2) {hidden_blind = true;hidden_speech_to_text = true}
+      else if(problems == 3) {hidden_deaf = true}
+      console.log(problems);
       var user = userFirstName + userLastName;
       var roomId = "<%= roomId %>";
       console.log(user);
@@ -51,9 +62,13 @@
             <button id="micButton" class="btn btn-info btn-lg">
               <i class="fa fa-microphone" aria-hidden="true"></i> Mic
             </button>
-            <button class="btn btn-info btn-lg">emotion (1)</button>
-            <button class="btn btn-info btn-lg">gender (2)</button>
-            <button class="btn btn-info btn-lg">age (3)</button>
+            <button class="btn btn-info btn-lg" id="emotionButton">
+              emotion (1)
+            </button>
+            <button class="btn btn-info btn-lg" id="genderButton">
+              gender (2)
+            </button>
+            <button class="btn btn-info btn-lg" id="ageButton">age (3)</button>
             <a href="/home" id="endCallButton" class="btn btn-danger btn-lg"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +88,7 @@
             <button class="btn btn-info btn-lg mt-2 me-2" id="start_button">
               Record sign language
             </button>
-            <button class="btn btn-info btn-lg mt-2 " id="s_to_t_button">
+            <button class="btn btn-info btn-lg mt-2" id="s_to_t_button">
               Speech to text
             </button>
             <h3 id="timer_container">Not Recording</h3>
@@ -199,7 +214,7 @@
           </div>
         </div>
       </div>
-      <script src="https://cdn.webrtc-experiment.com/Translator.js"> </script>
+      <script src="https://cdn.webrtc-experiment.com/Translator.js"></script>
       <script src="https://code.responsivevoice.org/responsivevoice.js?key=EDcfQc2X"></script>
       <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
       <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
@@ -215,6 +230,14 @@
       <script src="/js/chat.js"></script>
       <script>
         var f = "";
+        var emotionButton = document.querySelector("#emotionButton");
+        var genderButton = document.querySelector("#genderButton");
+        var ageButton = document.querySelector("#ageButton");
+        ageButton.hidden = hidden_blind;
+        genderButton.hidden = hidden_blind;
+        emotionButton.hidden = hidden_blind;
+        start_button.hidden = hidden_deaf;
+        s_to_t_button.hidden = hidden_speech_to_text;
         document.addEventListener("keydown", (e) => {
           if (!e.repeat) {
             if (e.which == 49) {
@@ -232,32 +255,32 @@
             if (e.which == 52) {
               startRecording();
             }
-          } else logMessage(`Key "${e.key}" repeating  [event: keydown]`);
+          } else console.log(`Key "${e.key}" repeating  [event: keydown]`);
         });
         socket.on("age", (data) => {
-          console.log(data)
+          console.log(data);
           responsiveVoice.speak(data, "Arabic Female");
         });
         socket.on("emotion", (data) => {
-          data = data.trim()
+          data = data.trim();
           let emotion = {
-            "Happy": "سعيد",
-            "Sad": "حزين",
-            "Angry": "غاضب",
-            "Surprise": "متفاجئ",
-            "Disgust": "مشمئز",
-            "Neutral": "طبيعي"
+            Happy: "سعيد",
+            Sad: "حزين",
+            Angry: "غاضب",
+            Surprise: "متفاجئ",
+            Disgust: "مشمئز",
+            Neutral: "طبيعي",
           };
-          console.log(data)
+          console.log(data);
           responsiveVoice.speak(emotion[data], "Arabic Female");
         });
         socket.on("gender", (data) => {
-          data = data.trim()
+          data = data.trim();
           let gender = {
-            'Male':"رجل",
-            'Female': "أُنثَى",
+            Male: "رجل",
+            Female: "أُنثَى",
           };
-          console.log(data)
+          console.log(data);
 
           responsiveVoice.speak(gender[data], "Arabic Female");
         });
