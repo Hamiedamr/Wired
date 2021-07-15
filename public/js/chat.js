@@ -54,6 +54,7 @@ if (hidden_blind) readChatFunction();
 // });
 
 socket.on("chatMessage", (message) => {
+  console.log("received");
   if (message.lang == "en" && readChat) {
     var data = JSON.stringify([
       {
@@ -104,9 +105,20 @@ socket.on("chatMessage", (message) => {
     let direction = "left";
     if (message.id == socket.id) {
       direction = "right";
-    } else {
-      responsiveVoice.speak(message.data, "Arabic Male");
     }
+    responsiveVoice.speak(message.data, "Arabic Male");
+    outputMessage(
+      message.data,
+      direction,
+      "https://bootdey.com/img/Content/avatar/avatar1.png",
+      message.date
+    );
+  } else {
+    let direction = "left";
+    if (message.id == socket.id) {
+      direction = "right";
+    }
+
     outputMessage(
       message.data,
       direction,
