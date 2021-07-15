@@ -77,7 +77,7 @@ io.on("connection", (socket) => {
     });
     console.log("image saved");
     const python = spawn("python", [
-      "GP_Blind_Features\\blind_features.py",
+      "GP_Blind_Features/blind_features.py",
       data.type,
     ]);
     python.stdout.on("data", (out) => {
@@ -103,7 +103,7 @@ io.on("connection", (socket) => {
           return;
         }
         console.log("video saved");
-        const python = spawn("python", ["GP_Deaf_Features\\deaf_features.py"]);
+        const python = spawn("python", ["GP_Deaf_Features/deaf_features.py"]);
         python.stdout.on("data", (data) => {
           dataFromPython = data.toString();
           let now = new Date();
