@@ -55,7 +55,7 @@ if (hidden_blind) readChatFunction();
 
 socket.on("chatMessage", (message) => {
   console.log("received");
-  if (message.lang == "en" && readChat) {
+  if (message.lang == "en") {
     var data = JSON.stringify([
       {
         text: message.data,
@@ -70,7 +70,8 @@ socket.on("chatMessage", (message) => {
         let direction = "left";
         if (message.id == socket.id) {
           direction = "right";
-        } else {
+        }
+        if (readChat) {
           responsiveVoice.speak(
             translatedText[0].translations[0].text,
             "Arabic Male"
