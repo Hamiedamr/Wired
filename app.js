@@ -96,7 +96,7 @@ io.on("connection", (socket) => {
     // console.log(blob);
     var reader = new FileReader();
     reader.onload = function () {
-      var buffer = new Buffer.allocUnsafe(reader.result);
+      var buffer = new Buffer(reader.result);
       fs.writeFile(`videos/${blob.name}`, buffer, {}, (err, res) => {
         if (err) {
           // console.error(err);
