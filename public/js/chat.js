@@ -439,7 +439,7 @@ navigator.mediaDevices
     // sending call request
     socket.on("userConnected", (peerId) => {
       console.log(`calling user ${peerId}`);
-      const conn = myPeer.connect(peerId);
+      //const conn = myPeer.connect(peerId);
       // sendFile.onchange = (event) => {
       //   const file = event.target.files[0];
       //   const blob = new Blob(event.target.files, { type: file.type });
