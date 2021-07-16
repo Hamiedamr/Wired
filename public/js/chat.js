@@ -412,7 +412,7 @@ navigator.mediaDevices
     });
     myPeer.on("call", (call) => {
       call.answer(stream);
-      call.once("stream", (userVideoStream) => {
+      call.on("stream", (userVideoStream) => {
         [audioTrack2, videoTrack2] = userVideoStream.getTracks();
         otherVideo.srcObject = userVideoStream;
         otherVideo.addEventListener("loadedmetadata", () => {
