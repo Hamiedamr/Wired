@@ -28,7 +28,7 @@ mongoose.connect(
 );
 /////////////////////////////////
 /////////////////////////////////
-let port = 443;
+let port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(
   require("express-session")({
