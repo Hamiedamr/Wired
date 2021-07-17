@@ -8,6 +8,7 @@ const express = require("express"),
   server = http.createServer(app),
   io = socketio(server),
   User = require("./models/User"),
+  flash = require("connect-flash"),
   mongoose = require("mongoose"),
   url = require("url"),
   bodyparser = require("body-parser"),
@@ -36,7 +37,7 @@ app.use(
     resave: false,
   })
 );
-
+app.use(flash());
 app.use(express.static("public"));
 app.use(express.static("node_modules"));
 app.use(bodyparser.urlencoded({ extended: true }));
@@ -53,6 +54,7 @@ let MAIL = "WIRED.APP.2021@gmail.com",
 /////////////////////////////////////////////////////////
 function isLogged(req, res, next) {
   if (req.isAuthenticated()) return next();
+  req.flash("error", "please login first");
   res.redirect("/login");
 }
 io.on("connection", (socket) => {
@@ -131,7 +133,7 @@ io.on("connection", (socket) => {
 
 app.get("/login", (req, res) => {
   if (req.isAuthenticated()) res.redirect("/home");
-  else res.render("index");
+  else res.render("index", { message: req.flash("error") });
 });
 
 app.get("/home", isLogged, (req, res) => {
@@ -287,7 +289,7 @@ app.post("/reset/:token", (req, res) => {
                 });
               });
             } else {
-              // req.flash("error", "Passwords do not match.");
+              req.flash("error", "Passwords do not match.");
               return res.redirect("back");
             }
           }
@@ -357,6 +359,7 @@ app.post(
   passport.authenticate("local", {
     successRedirect: "/home",
     failureRedirect: "/login",
+    failureFlash: "Invalid username or password.",
   }),
   (req, res) => {}
 );
@@ -364,7 +367,10 @@ app.post(
 app.post(
   "/sign_up",
   (req, res, next) => {
-    if (req.body.password === req.body.passwordRe) return next();
+    if (req.body.password === req.body.passwordRe) {
+      return next();
+    }
+    req.flash("error", "passwords do not match.");
     res.redirect("/login");
   },
   (req, res) => {
@@ -376,7 +382,8 @@ app.post(
       (err, user) => {
         if (err) {
           console.log(err);
-          return res.render("index");
+          req.flash("error", "email already exists.");
+          return res.render("index", { message: req.flash("error") });
         }
         user.firstName = req.body.firstName;
         user.lastName = req.body.lastName;
