@@ -155,7 +155,8 @@ let sendFunction = () => {
 sendButton.addEventListener("click", sendFunction);
 
 input.addEventListener("keypress", function (ev) {
-  if (ev.keyCode === 13 || ev.which === 13) {
+  if ((ev.keyCode === 13 || ev.which === 13) && !ev.shiftKey) {
+    ev.preventDefault();
     sendFunction();
   }
 });
