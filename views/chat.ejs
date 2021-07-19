@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/bootstrap-social/bootstrap-social.css" />
-    <link href="css/main1.css" rel="stylesheet" />
+    <link href="/css/main1.css" rel="stylesheet" />
     <link href="/css/navbar.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/chat.css" />
 
@@ -62,13 +62,6 @@
             <button id="micButton" class="btn btn-info btn-lg">
               <i class="fa fa-microphone" aria-hidden="true"></i> Mic
             </button>
-            <button class="btn btn-info btn-lg" id="emotionButton">
-              emotion (1)
-            </button>
-            <button class="btn btn-info btn-lg" id="genderButton">
-              gender (2)
-            </button>
-            <button class="btn btn-info btn-lg" id="ageButton">age (3)</button>
             <a href="/home" id="endCallButton" class="btn btn-danger btn-lg"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +84,7 @@
             <button class="btn btn-info btn-lg mt-2" id="s_to_t_button">
               Speech to text
             </button>
-            <h3 id="timer_container">Not Recording</h3>
+            <h3 id="timer_container" style="color: black">Not Recording</h3>
           </div>
         </div>
         <div class="col-sm-4">
@@ -100,7 +93,7 @@
               <!-- Panel Chat -->
               <div class="panel" id="chat">
                 <div class="panel-heading">
-                  <h3 class="panel-title">
+                  <h3 class="panel-title" style="color: black">
                     Messages
                     <i class="icon wb-chat-text" aria-hidden="true"></i>
                   </h3>
@@ -230,29 +223,23 @@
       <script src="/js/chat.js"></script>
       <script>
         var f = "";
-        var emotionButton = document.querySelector("#emotionButton");
-        var genderButton = document.querySelector("#genderButton");
-        var ageButton = document.querySelector("#ageButton");
-        ageButton.hidden = hidden_blind;
-        genderButton.hidden = hidden_blind;
-        emotionButton.hidden = hidden_blind;
         start_button.hidden = hidden_deaf;
         s_to_t_button.hidden = hidden_speech_to_text;
         document.addEventListener("keydown", (e) => {
           if (!e.repeat) {
-            if (e.which == 49) {
+            if (e.which == 49 && !hidden_blind) {
               f = "emotion";
               take_snapshot(f);
             }
-            if (e.which == 50) {
+            if (e.which == 50 && !hidden_blind) {
               f = "gender";
               take_snapshot(f);
             }
-            if (e.which == 51) {
+            if (e.which == 51 && !hidden_blind) {
               f = "age";
               take_snapshot(f);
             }
-            if (e.which == 52) {
+            if (e.which == 52 && hidden_deaf) {
               startRecording();
             }
           } else console.log(`Key "${e.key}" repeating  [event: keydown]`);
