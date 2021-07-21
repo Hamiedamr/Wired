@@ -1,34 +1,34 @@
 .card-header {
-    background: rgb(44, 238, 238);
-    background: linear-gradient(
-      90deg,
-      rgba(44, 238, 238, 1) 0%,
-      rgba(48, 139, 147, 1) 50%,
-      rgba(62, 138, 166, 1) 100%
-    );
-    color : white;
+  background: rgb(44, 238, 238);
+  background: linear-gradient(
+    90deg,
+    rgba(44, 238, 238, 1) 0%,
+    rgba(48, 139, 147, 1) 50%,
+    rgba(62, 138, 166, 1) 100%
+  );
+  color: white;
 }
-.card-body{
-    background-color: white;
+.card-body {
+  background-color: white;
 }
-body{
-    background-color: white ;
-}
-
-.media-body{
-    color: white;
-}
-.jumbotron{
-    background-image: url("/images/final.jpg");
-    background-repeat: repeat-x;
-    color : white ;
+body {
+  background-color: white;
+  background-image: url("../images/bluee.jpg");
 }
 
-.google{
-    background-color: #dd4b39;
-    color: white;
-
+.media-body {
+  color: white;
 }
-.navbar-brand{
-    font-family:"lucida handwriting" , cursive ,"papyrus";
+.jumbotron {
+  background-image: url("/images/jumbo.png");
+  /*background-repeat: repeat-x;*/
+  color: white;
+}
+
+.google {
+  background-color: #dd4b39;
+  color: white;
+}
+.navbar-brand {
+  font-family: "lucida handwriting", cursive, "papyrus";
 }

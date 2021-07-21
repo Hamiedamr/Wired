@@ -1,3 +1,6 @@
+body {
+  background-image: url("../images/bluee.jpg");
+}
 .chat-box {
   height: 100%;
   width: 100%;
@@ -39,13 +42,13 @@
 }
 
 .first-col {
-  background-color: powderblue;
+  background-color: #e0ffff;
   padding: 10px;
   border-radius: 10px;
   margin-top: 10px;
 }
 .second-col {
-  background-color: powderblue;
+  background-color: #e0ffff;
   padding: 10px;
   border-radius: 10px;
   margin-top: 10px;
@@ -162,4 +165,4 @@
 }
 .v1 {
   position: absolute;
-}
+} 
