@@ -38,6 +38,7 @@ app.use(
   })
 );
 app.use(flash());
+app.use(express.static(__dirname + '/public'));
 app.use(express.static("public"));
 app.use(express.static("node_modules"));
 app.use(bodyparser.urlencoded({ extended: true }));
