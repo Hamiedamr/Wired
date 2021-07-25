@@ -65,6 +65,11 @@ Deployed on **Microsoft Azure** with our domain with our reserved server so that
 * No need to install anything just open our link and enjoy!
 * Supported Browser : Chrome, Microsoft Edge, Mozilla Firefox...etc
 
+## Deployment
+We deployed our website on Microsoft Azure, Visit our link and enjoy our services:
+
+http://wired-meetings.centralus.cloudapp.azure.com:3000/home
+
 ## Future Work ISA
 In the future we aim to support the following features on our platform ISA:
 * Chatbot to help the user with his experience throughout the website and answer his/her questions
