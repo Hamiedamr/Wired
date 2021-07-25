@@ -1,4 +1,4 @@
-# Deaf Features
+# Features For The Deaf
 Understanding the language of the opponent we talk to is very important to make the communication more effective, unfortunately the deaf cannot be understood because basically they speak a different language, thats why we supported a Sign Language Translator for the deaf
 
 ## Sign Language Translator
