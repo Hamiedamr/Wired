@@ -1,4 +1,4 @@
-# Blind Features
+# Features For The Blind
 We implemented several methods to support variant features to help the blind communicate better
 
 First let's go through the features and their details:
@@ -7,7 +7,7 @@ First let's go through the features and their details:
 As we all know how it is important to know the feelings of the person you are talking to, we implemented the Emotion Recognition model as the feelings of the person
 are reflected on their faces most of the time causing a specific emotion
 
-For this task we used the **Xception Model** 
+For this task we used the **Xception Model** mentioned in this [Paper](https://arxiv.org/pdf/1710.07557.pdf)
 
 ![Xception Model](https://github.com/Hamiedamr/Wired/blob/master/GP_Blind_Features/pretrained_models/xception.png)
 
@@ -21,7 +21,7 @@ Also you can find our [Notebook](https://colab.research.google.com/drive/1r6mADG
 Because it is important to knowe the gender of the opponent for the blind user to determine what is the right way to address the other peer, we implemented the
 Gender Classification Model
 
-For this task we used the below model
+For this task we used the below model which mentioned in this [Paper](https://www.cv-foundation.org/openaccess/content_cvpr_workshops_2015/W08/papers/Levi_Age_and_Gender_2015_CVPR_paper.pdf)
 
 ![Gender Classification Model](https://github.com/Hamiedamr/Wired/blob/master/GP_Blind_Features/pretrained_models/gender_net2.png)
 
@@ -31,7 +31,7 @@ You can find our code in the [blind_features.py](https://github.com/Hamiedamr/Wi
 Because it is important to know the age of the opponent who we talk to is very important to establish a bridge of communication between the peers we implemented the 
 Age Estimation Model
 
-For this task we used the **EfficentNetB3 Model**
+For this task we used the **EfficentNetB3 Model** which mentioned in this [Paper](http://proceedings.mlr.press/v97/tan19a/tan19a.pdf)
 
 ![EfficentNetB3 Model](https://github.com/Hamiedamr/Wired/blob/master/GP_Blind_Features/pretrained_models/DEX_age2.png)
 
